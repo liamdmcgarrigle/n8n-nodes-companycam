@@ -2,13 +2,20 @@ import {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { projectFields, projectOperations } from './ProjectDescription';
+import { projectFields, projectOperations } from './Descriptions/ProjectDescription';
 import { notBuildNotice } from './NotBuiltYetNotice';
-import { projectPhotoOperations } from './ProjectPhotoDescription';
-import { projectCollaboratorFields, projectCollaboratorOperations } from './ProjectCollaboratorDescription';
-import { projectDocumentOperations } from './ProjectDocumentDescription';
-import { projectUserOperations } from './ProjectUserDescription';
-import { projectLabelOperations } from './ProjectLabelDescription';
+import { projectPhotoOperations } from './Descriptions/ProjectPhotoDescription';
+import { projectCollaboratorFields, projectCollaboratorOperations } from './Descriptions/ProjectCollaboratorDescription';
+import { projectDocumentOperations } from './Descriptions/ProjectDocumentDescription';
+import { projectUserOperations } from './Descriptions/ProjectUserDescription';
+import { projectLabelOperations } from './Descriptions/ProjectLabelDescription';
+import { resources } from './Resources';
+import { projectChecklistOperations } from './Descriptions/ProjectChecklistDescription';
+import { userOperations } from './UserDescription';
+import { photoOperations } from './Descriptions/PhotoDescription';
+import { tagOperations } from './TagDescription';
+import { groupOperations } from './Descriptions/groupDescription';
+import { otherOperations } from './Descriptions/otherDescription';
 
 export class Companycam implements INodeType {
 	description: INodeTypeDescription = {
@@ -16,10 +23,18 @@ export class Companycam implements INodeType {
 		name: 'companycam',
 		group: ['Data & Storage'],
 		version: 1,
-		subtitle: '={{ $parameter["operation"] + ": " + $parameter["resource"] }}',
+		subtitle: '={{ $parameter["operation"] }}',
 		description: 'Node for connecting CompanyCam',
 		defaults: {
 			name: 'CompanyCam',
+		},
+		requestDefaults: {
+			baseURL: 'https://api.companycam.com',
+			url: '/v2',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
 		},
 		icon: 'file:companycamLogo.svg',
 		inputs: ['main'],
@@ -30,57 +45,11 @@ export class Companycam implements INodeType {
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
+				// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 				default: 'project',
 				// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 				options: [
-					{
-						name: 'Project',
-						value: 'project',
-					},
-					{
-						name: 'Project Photo',
-						value: 'projectPhoto',
-					},
-					{
-						name: 'Project Collaborator',
-						value: 'projectCollaborator',
-					},
-					{
-						name: 'Project Document',
-						value: 'projectDocument',
-					},
-					{
-						name: 'Project User',
-						value: 'projectUser',
-					},
-					{
-						name: 'Project Label',
-						value: 'projectLabel',
-					},
-					{
-						name: 'Project Checklist',
-						value: 'projectChecklist',
-					},
-					{
-						name: 'User',
-						value: 'user',
-					},
-					{
-						name: 'Photo',
-						value: 'photo',
-					},
-					{
-						name: 'Tag',
-						value: 'tag',
-					},
-					{
-						name: 'Group',
-						value: 'group',
-					},
-					{
-						name: 'Other',
-						value: 'other',
-					},
+					...resources
 				],
 			},
 
@@ -102,6 +71,23 @@ export class Companycam implements INodeType {
 			...projectLabelOperations,
 			// ...projectLabelFields,
 
+			...projectChecklistOperations,
+			// ...projectChecklistFields,
+
+			...userOperations,
+			// ...userFields,
+
+			...photoOperations,
+			// ...photoFields,
+
+			...tagOperations,
+			// ...tagFields,
+
+			...groupOperations,
+			// ...groupFields,
+
+			...otherOperations,
+			// ...otherFields,
 
 			...notBuildNotice
 		],

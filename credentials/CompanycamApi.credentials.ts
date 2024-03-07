@@ -27,7 +27,7 @@ export class CompanycamApi implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
-				'authorization': 'Bearer ={{$credentials.value}}',
+				'authorization': '=Bearer {{$credentials.value}}',
 			},
 		},
 	};
