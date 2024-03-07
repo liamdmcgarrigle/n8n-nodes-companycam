@@ -39,6 +39,12 @@ export class Companycam implements INodeType {
 		icon: 'file:companycamLogo.svg',
 		inputs: ['main'],
 		outputs: ['main'],
+		credentials: [
+			{
+				name: 'companycamApi',
+				required: true,
+			},
+		],
 		properties: [
 			{
 				displayName: 'Resource',

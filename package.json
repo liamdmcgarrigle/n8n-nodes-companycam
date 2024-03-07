@@ -31,10 +31,11 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/CompanycamApi.credentialss.js"
+      "dist/credentials/CompanycamApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Companycam/Companycam.node.js"
+      "dist/nodes/Companycam/Companycam.node.js",
+      "dist/nodes/CompanycamTrigger/CompanycamTrigger.node.js"
     ]
   },
   "devDependencies": {
