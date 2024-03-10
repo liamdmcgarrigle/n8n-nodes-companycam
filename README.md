@@ -1,47 +1,108 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Overview of Community CompanyCam n8n Node](#overview-of-community-companycam-n8n-node)
+- [If you want a custom node](#if-you-want-a-custom-node)
+- [Bugs/Contributing/Feature Request](#bugscontributingfeature-request)
+- [Documentation](#documentation)
+	- [Installation](#installation)
+	- [Operations](#operations)
+	- [Credentials](#credentials)
+	- [Projects](#projects)
+		- [Create Project](#create-project)
+		- [Delete Project](#delete-project)
+	- [Project Collaborator](#project-collaborator)
+		- [Create Invitation for Collaboration](#create-invitation-for-collaboration)
 
-# n8n-nodes-starter
+# Overview of Community CompanyCam n8n Node
+I created this node for a client who only needed very specific functionality: Create Project, Delete Project, and Invite Collaborator. 
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](n8n.io). It includes the node linter and other dependencies.
-
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
-
-## Prerequisites
-
-You need the following installed on your development machine:
-
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 16. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-	```
-	npm install n8n -g
-	```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+I decided to add the fields of everything possible with the company cam API so anyone in the future can see what is possible and either submit a PR to this repo or fund the completion. 
 
 
-## Using this starter
+# If you want a custom node
+Please reach out to me using the info on [my GitHub page](https://github.com/liamdmcgarrigle).  \
+Nodes can be built for the community as well as privately just for one organization.
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+# Bugs/Contributing/Feature Request
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-    ```
-    git clone https://github.com/<your organization>/<your-repo-name>.git
-    ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+If you have a bug to report or a feature request, please [submit a GitHub issue](https://github.com/liamdmcgarrigle/n8n-nodes-zoho-bookings/issues/new) with as much detail as you're able to give.
 
-## More information
+Feel free to submit PRs, but please get in touch with me first to make sure I am willing to add the feature before you spend the time on it.
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+# Documentation
 
-## License
+## Installation
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+This can only be installed if you are self-hosting n8n.
+
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+
+## Operations
+
+Here is a list of all of the currently built operations in the CompanyCam node.
+
+Projects
+- Create Project
+- Delete Project
+
+Project Collaborator
+- Create Invitation for Collaboration
+
+## Credentials
+
+To use this node you will need to set up CompanyCam credentials with a key from CompanyCam.
+
+1. Go to https://app.companycam.com/access_tokens and click on "New Token"
+![Screenshot1](/readme_files/get_comapnycam_key-1.png)
+
+2. Keep the dropdown on "N/A", leave "This token will ONLY be used to read data from CompanyCam" unchecked, and click "Create Token"
+![Screenshot2](/readme_files/get_comapnycam_key-2.png)
+
+3. Copy your new token
+![Screenshot3](/readme_files/get_comapnycam_key-3.png)
+
+4. Go to the credential page in n8n, in add credentials add "CompanyCam API", then paste in your token and press save
+![Screenshot4](/readme_files/get_comapnycam_key-4.png)
+
+## Projects
+
+### Create Project
+Enter the project name to create a project with that name.
+
+Under "Additional Fields" there is the option to add:
+- Project Contact
+- Project Address
+- Project Coordinates
+
+If you add both the project address and coordinates then the address will be displayed as the project address but the coordinates will be used for the map location and "Nearby Projects" location
+
+### Delete Project
+Delete a project by passing in the project ID.
+
+The node returns an empty response on success.
+
+## Project Collaborator
+
+### Create Invitation for Collaboration
+Create an invitation by passing in the Project ID. 
+
+The response will be an object like this:
+```
+
+{
+	"id":"629418",
+	"project_id": "66027321",
+	"invite_url": "https://l.cmpy.cam/7sHU3wcW3FP1eMdd6",
+	"status": "pending",
+	"accepted_at": null,
+	"accepted_by_id": null,
+	"expires_at": 1710633600,
+	"creator_id": 2553021,
+	"created_at": 1710088231,
+	"updated_at": 1710088231
+}
+```
+
+The `invite_url` is the link to share with the collaborator.
+
+This link is valid for 7 days and can only be accepted once.
