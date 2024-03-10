@@ -29,8 +29,7 @@ export class Companycam implements INodeType {
 			name: 'CompanyCam',
 		},
 		requestDefaults: {
-			baseURL: 'https://api.companycam.com',
-			url: '/v2',
+			baseURL: 'https://api.companycam.com/v2',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',

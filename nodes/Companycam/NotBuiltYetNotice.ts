@@ -19,7 +19,6 @@ const notBuiltOperations = [
 	'listProjects',
 	'retrieveProject',
 	'updateProject',
-	'deleteProject',
 	'restoreProject',
 	'updateTheProjectNotepad',
 	'listProjectComments',

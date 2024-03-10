@@ -20,11 +20,6 @@ export const resources = [
 	{
 		name: 'Project Collaborator',
 		value: 'projectCollaborator',
-		routing: {
-			request: {
-				url: '/projects'
-			}
-		}
 	},
 	{
 		name: 'Project Document',
