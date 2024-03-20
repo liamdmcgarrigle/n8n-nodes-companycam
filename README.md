@@ -8,13 +8,16 @@
 	- [Operations](#operations)
 	- [Credentials](#credentials)
 	- [Projects](#projects)
+		- [List Projects](#list-projects)
+			- [Query](#query)
+			- [Pagination](#pagination)
 		- [Create Project](#create-project)
 		- [Delete Project](#delete-project)
 	- [Project Collaborator](#project-collaborator)
 		- [Create Invitation for Collaboration](#create-invitation-for-collaboration)
 
 # Overview of Community CompanyCam n8n Node
-I created this node for a client who only needed very specific functionality: Create Project, Delete Project, and Invite Collaborator. 
+I created this node for a client who only needed very specific functionality: List Projects, Create Project, Delete Project, and Invite Collaborator. 
 
 I decided to add the fields of everything possible with the company cam API so anyone in the future can see what is possible and either submit a PR to this repo or fund the completion. 
 
@@ -42,6 +45,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 Here is a list of all of the currently built operations in the CompanyCam node.
 
 Projects
+- List Projects
 - Create Project
 - Delete Project
 
@@ -65,6 +69,18 @@ To use this node you will need to set up CompanyCam credentials with a key from 
 ![Screenshot4](/readme_files/get_comapnycam_key-4.png)
 
 ## Projects
+
+### List Projects
+Get a list of projects in your account. You can filter with a query and the search supports pagination.
+
+#### Query
+You can use the `Query` field to search. This will search the project name and address line 1. It returns some loose results.
+
+For example, in my testing, it returned an address "28205 Street" when I searched "2820 Street" but when I searched for "123 Deer Path Street" it did not return the actual address which was "123 Deerpath Street"
+
+#### Pagination
+The pagination options are under the `Additional Fields`.
+Page defaults to `0` and Per Page defaults to `30`.
 
 ### Create Project
 Enter the project name to create a project with that name.

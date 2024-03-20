@@ -118,29 +118,6 @@ export const projectFields: INodeProperties[] = [
 				]
 			}
 		},
-		routing: {
-			request: {
-				body: {
-					"primary_contact":{
-						"name": "={{$parameter.additionalFields.contact.contactFields.name}}",
-						"email": "={{$parameter.additionalFields.contact.contactFields.email}}",
-						"phone_number": "={{$parameter.additionalFields.contact.contactFields.phone_number}}",
-					},
-					"address":{
-						"street_address_1": "={{$parameter.additionalFields.address.addressFields.street_address_1}}",
-						"street_address_2": "={{$parameter.additionalFields.address.addressFields.street_address_2}}",
-						"city": "={{$parameter.additionalFields.address.addressFields.city}}",
-						"state": "={{$parameter.additionalFields.address.addressFields.state}}",
-						"postal_code": "={{$parameter.additionalFields.address.addressFields.postal_code}}",
-						"country": "={{$parameter.additionalFields.address.addressFields.country}}",
-					},
-					"coordinates":{
-						"lat": "={{$parameter.additionalFields.coordinates.coordinatesFeilds.lat}}",
-						"lon": "={{$parameter.additionalFields.coordinates.coordinatesFeilds.lon}}",
-					},
-				}
-			},
-		},
 		options: [
 			{
 				displayName: 'Contact',
@@ -163,6 +140,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: 'John Smith',
+								routing: {
+									request: {
+										body: {
+											"primary_contact":{
+												"name": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'Email',
@@ -170,17 +156,35 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: 'example@email.com',
+								routing: {
+									request: {
+										body: {
+											"primary_contact":{
+												"email": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'Phone Number',
 								name: 'phone_number',
 								type: 'string',
 								default: '',
+								routing: {
+									request: {
+										body: {
+											"primary_contact":{
+												"phone_number": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 						],
 					},
-
 				],
+
 			},
 			{
 				displayName: 'Address',
@@ -202,6 +206,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: '2600 Benjamin Franklin Pkwy',
+								routing: {
+									request: {
+										body: {
+											"address":{
+												"street_address_1": '={{ $value }}',
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'Street Address 2',
@@ -209,6 +222,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: 'Unit B',
+								routing: {
+									request: {
+										body: {
+											"address":{
+												"street_address_2": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'City',
@@ -216,6 +238,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: 'Philadelphia',
+								routing: {
+									request: {
+										body: {
+											"address":{
+												"city": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'State',
@@ -223,6 +254,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: 'PA',
+								routing: {
+									request: {
+										body: {
+											"address":{
+												"state": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'Postal Code',
@@ -230,6 +270,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: '19130',
+								routing: {
+									request: {
+										body: {
+											"address":{
+												"postal_code": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 							{
 								displayName: 'Country',
@@ -237,6 +286,15 @@ export const projectFields: INodeProperties[] = [
 								type: 'string',
 								default: '',
 								placeholder: 'United States',
+								routing: {
+									request: {
+										body: {
+											"address":{
+												"country": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 						],
 					},
@@ -269,6 +327,15 @@ export const projectFields: INodeProperties[] = [
 									numberStepSize: 0.000001,
 								},
 								required: true,
+								routing: {
+										request: {
+											body: {
+												"coordinates":{
+													"lat": "={{ $value }}",
+												},
+											}
+										},
+									},
 							},
 							{
 								displayName: 'Longitude',
@@ -282,6 +349,15 @@ export const projectFields: INodeProperties[] = [
 									numberStepSize: 0.000001,
 								},
 								required: true,
+								routing: {
+									request: {
+										body: {
+											"coordinates":{
+												"lon": "={{ $value }}",
+											},
+										}
+									},
+								},
 							},
 						],
 					},
@@ -317,4 +393,101 @@ export const projectFields: INodeProperties[] = [
 			}
 		},
 	},
+
+
+	//
+	//
+	//    LIST PROJECTS
+	//
+
+	{
+		displayName: 'Query',
+		name: 'query',
+		type: 'string',
+		description: 'Search by Address line 1 or Title',
+		default: '',
+		placeholder: '2600 Benjamin Franklin Pkwy',
+		routing: {
+			request: {
+				method: 'GET',
+				url: '=/projects/',
+				qs: {
+					'query': '={{ $value }}',
+					'page': 0,
+					'per_page': 30
+				}
+			},
+
+		},
+		displayOptions: {
+			show: {
+				resource: [
+					'project',
+				],
+				operation: [
+					'listProjects'
+				]
+			}
+		},
+	},
+
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		default: {},
+		placeholder: 'Add Field',
+		displayOptions: {
+			show: {
+				resource: [
+					'project',
+				],
+				operation: [
+					'listProjects'
+				]
+			}
+		},
+		options: [
+			{
+				displayName: 'Page',
+				name: 'page',
+				type: 'string',
+				description: 'Page of result',
+				default: '',
+				routing: {
+					request: {
+						qs: {
+							'page': '={{ $value }}'
+						}
+					},
+
+				},
+
+			},
+
+			{
+				displayName: 'Per Page',
+				name: 'perPage',
+				type: 'string',
+				description: 'How many results per page',
+				default: '',
+				routing: {
+					request: {
+						qs: {
+							'per_page': '={{ $value }}'
+						}
+					},
+
+				},
+
+			},
+		]
+	},
+
+
+
+
+
+
+
 ]

@@ -16,7 +16,6 @@ const notBuiltResources = [
 
 const notBuiltOperations = [
 	// Project Operations not built yet
-	'listProjects',
 	'retrieveProject',
 	'updateProject',
 	'restoreProject',
